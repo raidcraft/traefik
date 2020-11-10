@@ -7,21 +7,25 @@ services:
     container_name: "traefik"
     command:
       #- "--log.level=DEBUG"
-      - "--api.insecure=true"
+      #- "--api.insecure=true"
       - "--pilot.token=786c78fb-0500-439e-a7db-de84db967d1c"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-    # - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.myresolver.acme.email=webmaster@raid-craft.de"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       - "443:443"
-      - "80:8080"
+      - "80:80"
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    labels:
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.mc1.raid-craft.de`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/"
 
   whoami:
     image: "traefik/whoami"
