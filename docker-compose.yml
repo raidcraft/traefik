@@ -6,7 +6,7 @@ services:
     image: "traefik:v2.3"
     container_name: "traefik"
     command:
-     #- "--log.level=DEBUG"
+      - "--log.level=DEBUG"
       - "--api.dashboard=true"
       - "--pilot.token=786c78fb-0500-439e-a7db-de84db967d1c"
       - "--providers.docker=true"
