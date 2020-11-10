@@ -1,7 +1,6 @@
 version: "3.3"
 
 services:
-
   traefik:
     image: "traefik:v2.3"
     container_name: "traefik"
@@ -21,6 +20,8 @@ services:
     ports:
       - "443:443"
       - "80:80"
+    networks:
+      - traefik_default
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -31,3 +32,6 @@ services:
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.users=silthus:$$apr1$$Vz5a5KTB$$rSMD5Tfe4Sh9mlrzEv37H."
+networks:
+  traefik_default:
+    driver: bridge
