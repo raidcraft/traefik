@@ -6,12 +6,10 @@ services:
     image: "traefik:v2.3"
     container_name: "traefik"
     command:
-      #- "--log.level=DEBUG"
-      #- "--api.insecure=true"
+     #- "--log.level=DEBUG"
       - "--api.dashboard=true"
       - "--pilot.token=786c78fb-0500-439e-a7db-de84db967d1c"
       - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
