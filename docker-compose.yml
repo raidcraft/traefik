@@ -34,5 +34,4 @@ services:
       - "traefik.http.middlewares.auth.basicauth.users=silthus:$$apr1$$Vz5a5KTB$$rSMD5Tfe4Sh9mlrzEv37H."
 networks:
   traefik:
-    driver: bridge
     external: true
